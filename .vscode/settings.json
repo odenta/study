@@ -1,0 +1,23 @@
+{
+    "files.associations": {
+        "*.sqx": "cpp",
+        "*.hpp": "cpp",
+        "__locale": "cpp",
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "iosfwd": "cpp",
+        "__config": "cpp",
+        "__nullptr": "cpp",
+        "cstddef": "cpp",
+        "exception": "cpp",
+        "initializer_list": "cpp",
+        "new": "cpp",
+        "stdexcept": "cpp",
+        "type_traits": "cpp",
+        "typeinfo": "cpp",
+        "ios": "cpp",
+        "istream": "cpp",
+        "string": "cpp",
+        "map": "cpp"
+    }
+}
