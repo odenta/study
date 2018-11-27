@@ -8,6 +8,10 @@ using namespace std;
 void transform(const map<string, string> &rules, istream &input, ostream &output);
 const map<string, string> read_rules(istream &);
 
+void text_transform (ifstream &map_file, ifstream & input);
+map<string, string> build_map(ifstream &mapfile);
+
+
 int main(int argc, char* argv[])
 {
     if (argc < 3) {
@@ -41,4 +45,19 @@ const map<string, string> read_rules(istream &strm)
                 rules[val_in] = val_out;
     }
     return rules;
+}
+
+
+map<string, string> build_map(ifstream &mapFile)
+{
+    map<string, string> transform_map;
+    string key, value;
+    while (mapFile >> key && getline(mapFile, value)) {
+        if (value.size() > 1) {
+            transform_map[key] = value.substr(1);
+        } else {
+            throw runtime_error("no value for the key " + key);
+        }
+    }
+    return transform_map;
 }
