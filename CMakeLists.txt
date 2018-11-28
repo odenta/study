@@ -7,3 +7,4 @@ else()
 endif()
 
 add_executable(study main.cpp)
+target_compile_features(study PUBLIC cxx_std_11)

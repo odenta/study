@@ -18,6 +18,8 @@
         "ios": "cpp",
         "istream": "cpp",
         "string": "cpp",
-        "map": "cpp"
-    }
+        "map": "cpp",
+        "sstream": "cpp"
+    },
+    "C_Cpp.intelliSenseEngineFallback": "Disabled"
 }

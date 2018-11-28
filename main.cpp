@@ -3,48 +3,39 @@
 #include <sstream>
 #include <map>
 #include <string>
-using namespace std;
 
-void transform(const map<string, string> &rules, istream &input, ostream &output);
-const map<string, string> read_rules(istream &);
+using namespace std;
 
 void text_transform (ifstream &map_file, ifstream & input);
 map<string, string> build_map(ifstream &mapfile);
+const string& word_transform(const string &input, const map<string,string> &rules);
 
 
 int main(int argc, char* argv[])
 {
     if (argc < 3) {
-        cout << "Error, usage: "<< endl <<
-                "  prgm rules.file input.file" << endl;
+        cout << "Error, usage: "<< "\n" <<
+                "  prgm rules.file input.file" << "\n";
         return 1;
     }
 
     ifstream rules_stream(argv[1]), input_stream(argv[2]);
-    transform(read_rules(rules_stream), input_stream, cout);
+    if (!rules_stream || !input_stream) {
+        cerr << "can't open input files" << endl;
+        return -1;
+    }
+    text_transform(rules_stream, input_stream);
 
     return 0;
 }
 
-
-void transform(const map<string, string> &rules, istream &input, ostream &output)
+const string& word_transform(const string &input, const map<string,string> &rules)
 {
-
-}
-
-const map<string, string> read_rules(istream &strm)
-{
-    string line;
-    istringstream tockens;
-    map<string, string> rules;
-    while (getline(strm, line)) {
-        tockens = istringstream(line);
-        string val_in, val_out;
-        if (tockens >> val_in)
-            if (tockens >> val_out)
-                rules[val_in] = val_out;
+    auto map_it = rules.find(input);
+    if (map_it == rules.end()) {
+        return input;
     }
-    return rules;
+    return map_it->second;
 }
 
 
@@ -60,4 +51,24 @@ map<string, string> build_map(ifstream &mapFile)
         }
     }
     return transform_map;
+}
+
+void text_transform (ifstream &map_file, ifstream & input)
+{
+    auto rules = build_map(map_file);
+    string line;
+    while (getline(input, line)) {
+        istringstream stream(line);
+        string word;
+        bool isFirstWord = true;
+        while (stream >> word) {
+            if (isFirstWord) {
+                isFirstWord = false;
+            } else {
+                cout << " ";
+            }
+            cout << word_transform(word, rules);
+        }
+        cout << "\n";
+    }
 }
