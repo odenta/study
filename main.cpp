@@ -2,13 +2,15 @@
 #include <fstream>
 #include <sstream>
 #include <map>
+#include <unordered_map>
 #include <string>
 
 using namespace std;
+using umap = unordered_map<string, string>;
 
 void text_transform (ifstream &map_file, ifstream & input);
-map<string, string> build_map(ifstream &mapfile);
-const string& word_transform(const string &input, const map<string,string> &rules);
+umap build_map(ifstream &mapfile);
+const string& word_transform(const string &input, const umap &rules);
 
 
 int main(int argc, char* argv[])
@@ -29,7 +31,7 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-const string& word_transform(const string &input, const map<string,string> &rules)
+const string& word_transform(const string &input, const umap &rules)
 {
     auto map_it = rules.find(input);
     if (map_it == rules.end()) {
@@ -39,9 +41,9 @@ const string& word_transform(const string &input, const map<string,string> &rule
 }
 
 
-map<string, string> build_map(ifstream &mapFile)
+umap build_map(ifstream &mapFile)
 {
-    map<string, string> transform_map;
+    umap transform_map;
     string key, value;
     while (mapFile >> key && getline(mapFile, value)) {
         if (value.size() > 1) {
@@ -56,6 +58,11 @@ map<string, string> build_map(ifstream &mapFile)
 void text_transform (ifstream &map_file, ifstream & input)
 {
     auto rules = build_map(map_file);
+
+    for (uint n = 0; n < rules.bucket_count(); n++) {
+        
+    }
+
     string line;
     while (getline(input, line)) {
         istringstream stream(line);
